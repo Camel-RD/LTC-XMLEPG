@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EpgData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Channels>
+    <EpgChannel>
+      <Programs />
+      <Name>LTV1</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/ltv1/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>LTV7</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/ltv7/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TV3</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tv3/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>LNT</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/lnt/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TV5</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tv5/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TV6</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tv6/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Kanāls 2</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/kanals_2/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>STV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/stv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>360TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/360tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>360TV Dinamo Rīga</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/360tv_dinamo_riga/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>3+</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/3_plus/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Pirmais Baltijas Kanāls</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/pirmais_baltijas_kanals/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>RTR Planeta </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/rtr_planeta/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>NTV Mir</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/ntv_mir/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>REN Baltija</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/ren_baltija/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Re:TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/re_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Riga TV24</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/riga_tv24/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TV21(TV-XXI)</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tv21_tv_xxi/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>FOX</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/fox/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Fox Life</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/fox_life/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Sony Entertainment TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/sony_entertainment_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Cartoon Network</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/cartoon_network/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Nickelodeon</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/nickelodeon/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Eurosport</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/eurosport/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Eurosport 2</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/eurosport_2/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Outdoor Channel</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/outdoor_channel/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>sportacentrs.com</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/sportacentrs_com/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Best4Sport TV </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/best4sport_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Discovery Channel</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/discovery_channel/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Animal Planet</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/animal_planet/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>National Geographic</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/national_geographic/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>History Channel </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/history_channel/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>MTV Europe</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/mtv_europe/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>VH1 Europe</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/vh1_europe/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>MTV Music 24</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/latvijas_slagerkanals/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>1 Baltijas mūzikas kanāls</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/muzikas_video/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Muz TV Baltija</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/muz_tv_baltija/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>iConcerts</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/iconcerts/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>RTVi</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/rtvi/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Euronews</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/euronews/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>CNN International</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/cnn_international/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>BBC World</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/dozd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Amedia2</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/espreso/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>1+1 International</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/multimania/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Food Network</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/food_network/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Filmzone</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/filmzone/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>E! Entertainment</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/e_entertainment/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>FilmBox</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/filmbox/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Sony Turbo</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/sony_turbo/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>K1</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/k1/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Дом Кино</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/dom_kino/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>American Movie Classics</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/american_movie_classics/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>K2 </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/k2/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Bestseller + </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/bestseller_plus/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Jim Jam</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/jim_jam/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Boomerang</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/boomerang/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Disney Channel</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/disney_channel/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Disney XD</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/disney_xd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Disney Junior</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/disney_junior/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Karusel</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/karusel/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Gulli</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/gulli/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TiJi</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tiji/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Da Vinci Learning </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/da_vinci_learning/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Lolo-TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/lolo_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Kidzone</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/kidzone/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>NBA TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/nba_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>KHL</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/khl/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Extreme Sport</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/extreme_sport/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Motors TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/motors_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Ginx TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/ginx_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Bojec</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/bojec/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Setanta Sport </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/setanta_sport/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Discovery Science</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/discovery_science/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TLC</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tlc/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>ID Investigation Discovery </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/id_investigation_discovery/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Discovery World</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/discovery_world/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Nat Geo Wild</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/nat_geo_wild/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Наука 2.0</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/nauka_2_0/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Travel Channel</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/travel_channel/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>BBC Earth</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/bbc_earth/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>VH1 Classic</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/vh1_classic/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>MTV Hits</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/mtv_hits/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>MTV Dance</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/mtv_dance/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>MTV Rocks</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/mtv_rocks/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Mezzo</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/mezzo/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Fashion One</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/fashion_one/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>CTC Baltics</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/ctc_baltics/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Мир</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/mir/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Комедия ТВ</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/komedij_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Время: далекое и близкое</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/vremj_dalekoe_i_blizkoe/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Русский Иллюзион</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/russkij_illuzion/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TVCI</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tvci/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>РБК</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/rbk/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Моя планета</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/moj_planeta/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Телекафе</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/telekafe/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Иллюзион +</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/illuzion_plus/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Охота и рыбалка </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/ohota_i_rybalka/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>BBC World</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/bbc_world/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Arte</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/arte/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>RTL</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/rtl/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>PRO 7</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/pro_7/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Rai Uno</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/rai_uno/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>SAT1</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/sat1/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>France 2</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/france_2/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Bloomberg</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/bloomberg/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Al Jazeera International</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/al_jazeera_international/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Nickelodeon HD</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/nickelodeon_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Eurosport HD</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/eurosport_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>NBA TV HD</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/nba_tv_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Eurosport 2 HD</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/eurosport_2_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Discovery HD Showcase</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/discovery_hd_showcase/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>National Geographic HD</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/national_geographic_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Animal Planet HD </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/animal_planet_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Discovery Science HD </Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/discovery_science_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>iConcerts HD</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/iconcerts_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>MTV Live HD</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/mtv_live_hd/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Hustler TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/hustler_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Private TV</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/private_tv/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Brazzers TV Europe</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/brazzers_tv_europe/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TV1000</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tv1000/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TV1000 Russkoje Kino</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tv1000_russkoje_kino/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TV1000 Action</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tv1000_action/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>TV1000 Premium</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/tv1000_premium/</URL>
+      <Use>true</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Viasat Sport Baltic</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/viasat_sport_baltic/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Viasat Golf</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/viasat_golf/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+    <EpgChannel>
+      <Programs />
+      <Name>Viasat Motor</Name>
+      <URL>https://tv.lattelecom.lv/lv/programma/interaktiva/list/viasat_motor/</URL>
+      <Use>false</Use>
+    </EpgChannel>
+  </Channels>
+  <AddHours>0</AddHours>
+  <TimeZone>2</TimeZone>
+  <ChannelListURL>https://tv.lattelecom.lv/lv/programma/interaktiva/list</ChannelListURL>
+</EpgData>
