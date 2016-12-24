@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bsChannels = new System.Windows.Forms.BindingSource(this.components);
             this.bsPrograms = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -38,7 +38,8 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.getFromWebpageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miGetFromAPI = new System.Windows.Forms.ToolStripMenuItem();
+            this.miGetFromWebPage = new System.Windows.Forms.ToolStripMenuItem();
             this.getFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.esportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,9 +49,10 @@
             this.clearAllForDatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCurrentForDatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.getAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.getCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miGetAllFromAPI = new System.Windows.Forms.ToolStripMenuItem();
+            this.miGetCurrentFromAPI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.getCurrentFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbURL = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -64,15 +66,15 @@
             this.tbTimeZone = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gdvChannels = new System.Windows.Forms.DataGridView();
+            this.dgcChUse = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dgcChName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgcChURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvPrograms = new System.Windows.Forms.DataGridView();
-            this.tbDescr = new System.Windows.Forms.TextBox();
             this.dgcPrStart = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgcPrEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgcPrTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgcPrDescr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcChUse = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dgcChName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcChURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbDescr = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.bsChannels)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsPrograms)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -111,7 +113,8 @@
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.toolStripSeparator2,
-            this.getFromWebpageToolStripMenuItem,
+            this.miGetFromAPI,
+            this.miGetFromWebPage,
             this.getFromFileToolStripMenuItem,
             this.toolStripSeparator3,
             this.esportToolStripMenuItem});
@@ -138,12 +141,19 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(261, 6);
             // 
-            // getFromWebpageToolStripMenuItem
+            // miGetFromAPI
             // 
-            this.getFromWebpageToolStripMenuItem.Name = "getFromWebpageToolStripMenuItem";
-            this.getFromWebpageToolStripMenuItem.Size = new System.Drawing.Size(264, 30);
-            this.getFromWebpageToolStripMenuItem.Text = "Get From Webpage";
-            this.getFromWebpageToolStripMenuItem.Click += new System.EventHandler(this.getFromWebpageToolStripMenuItem_Click);
+            this.miGetFromAPI.Name = "miGetFromAPI";
+            this.miGetFromAPI.Size = new System.Drawing.Size(264, 30);
+            this.miGetFromAPI.Text = "Get From API";
+            this.miGetFromAPI.Click += new System.EventHandler(this.getFromAPI_Click);
+            // 
+            // miGetFromWebPage
+            // 
+            this.miGetFromWebPage.Name = "miGetFromWebPage";
+            this.miGetFromWebPage.Size = new System.Drawing.Size(264, 30);
+            this.miGetFromWebPage.Text = "Get From Webpage";
+            this.miGetFromWebPage.Click += new System.EventHandler(this.miGetFromWebPage_Click);
             // 
             // getFromFileToolStripMenuItem
             // 
@@ -172,9 +182,10 @@
             this.clearAllForDatesToolStripMenuItem,
             this.clearCurrentForDatesToolStripMenuItem,
             this.toolStripSeparator1,
-            this.getAllToolStripMenuItem,
-            this.getCurrentToolStripMenuItem,
+            this.miGetAllFromAPI,
+            this.miGetCurrentFromAPI,
             this.toolStripSeparator4,
+            this.toolStripSeparator5,
             this.getCurrentFromFileToolStripMenuItem});
             this.programmmsToolStripMenuItem.Name = "programmmsToolStripMenuItem";
             this.programmmsToolStripMenuItem.Size = new System.Drawing.Size(108, 29);
@@ -213,24 +224,29 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(353, 6);
             // 
-            // getAllToolStripMenuItem
+            // miGetAllFromAPI
             // 
-            this.getAllToolStripMenuItem.Name = "getAllToolStripMenuItem";
-            this.getAllToolStripMenuItem.Size = new System.Drawing.Size(356, 30);
-            this.getAllToolStripMenuItem.Text = "Get All";
-            this.getAllToolStripMenuItem.Click += new System.EventHandler(this.getAllToolStripMenuItem_Click);
+            this.miGetAllFromAPI.Name = "miGetAllFromAPI";
+            this.miGetAllFromAPI.Size = new System.Drawing.Size(356, 30);
+            this.miGetAllFromAPI.Text = "Get All";
+            this.miGetAllFromAPI.Click += new System.EventHandler(this.getAllFromAPI_Click);
             // 
-            // getCurrentToolStripMenuItem
+            // miGetCurrentFromAPI
             // 
-            this.getCurrentToolStripMenuItem.Name = "getCurrentToolStripMenuItem";
-            this.getCurrentToolStripMenuItem.Size = new System.Drawing.Size(356, 30);
-            this.getCurrentToolStripMenuItem.Text = "Get Current";
-            this.getCurrentToolStripMenuItem.Click += new System.EventHandler(this.getCurrentToolStripMenuItem_Click);
+            this.miGetCurrentFromAPI.Name = "miGetCurrentFromAPI";
+            this.miGetCurrentFromAPI.Size = new System.Drawing.Size(356, 30);
+            this.miGetCurrentFromAPI.Text = "Get Current";
+            this.miGetCurrentFromAPI.Click += new System.EventHandler(this.getCurrentFromAPI_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(353, 6);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(353, 6);
             // 
             // getCurrentFromFileToolStripMenuItem
             // 
@@ -357,69 +373,6 @@
             this.gdvChannels.Size = new System.Drawing.Size(300, 477);
             this.gdvChannels.TabIndex = 2;
             // 
-            // dgvPrograms
-            // 
-            this.dgvPrograms.AutoGenerateColumns = false;
-            this.dgvPrograms.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvPrograms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPrograms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgcPrStart,
-            this.dgcPrEnd,
-            this.dgcPrTitle,
-            this.dgcPrDescr});
-            this.dgvPrograms.DataSource = this.bsPrograms;
-            this.dgvPrograms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvPrograms.Location = new System.Drawing.Point(0, 0);
-            this.dgvPrograms.Name = "dgvPrograms";
-            this.dgvPrograms.RowHeadersVisible = false;
-            this.dgvPrograms.RowTemplate.Height = 24;
-            this.dgvPrograms.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvPrograms.Size = new System.Drawing.Size(689, 343);
-            this.dgvPrograms.TabIndex = 3;
-            // 
-            // tbDescr
-            // 
-            this.tbDescr.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tbDescr.Location = new System.Drawing.Point(0, 343);
-            this.tbDescr.Multiline = true;
-            this.tbDescr.Name = "tbDescr";
-            this.tbDescr.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDescr.Size = new System.Drawing.Size(689, 134);
-            this.tbDescr.TabIndex = 4;
-            // 
-            // dgcPrStart
-            // 
-            this.dgcPrStart.DataPropertyName = "Start";
-            dataGridViewCellStyle3.Format = "dd.MM HH:mm";
-            this.dgcPrStart.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgcPrStart.HeaderText = "Start";
-            this.dgcPrStart.Name = "dgcPrStart";
-            this.dgcPrStart.Width = 120;
-            // 
-            // dgcPrEnd
-            // 
-            this.dgcPrEnd.DataPropertyName = "End";
-            dataGridViewCellStyle4.Format = "dd.MM HH:mm";
-            this.dgcPrEnd.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dgcPrEnd.HeaderText = "End";
-            this.dgcPrEnd.Name = "dgcPrEnd";
-            this.dgcPrEnd.Width = 120;
-            // 
-            // dgcPrTitle
-            // 
-            this.dgcPrTitle.DataPropertyName = "Title";
-            this.dgcPrTitle.HeaderText = "Title";
-            this.dgcPrTitle.Name = "dgcPrTitle";
-            this.dgcPrTitle.Width = 400;
-            // 
-            // dgcPrDescr
-            // 
-            this.dgcPrDescr.DataPropertyName = "Description";
-            this.dgcPrDescr.HeaderText = "Descr";
-            this.dgcPrDescr.Name = "dgcPrDescr";
-            this.dgcPrDescr.Visible = false;
-            this.dgcPrDescr.Width = 400;
-            // 
             // dgcChUse
             // 
             this.dgcChUse.DataPropertyName = "Use";
@@ -443,6 +396,69 @@
             this.dgcChURL.Name = "dgcChURL";
             this.dgcChURL.Visible = false;
             this.dgcChURL.Width = 470;
+            // 
+            // dgvPrograms
+            // 
+            this.dgvPrograms.AutoGenerateColumns = false;
+            this.dgvPrograms.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPrograms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPrograms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgcPrStart,
+            this.dgcPrEnd,
+            this.dgcPrTitle,
+            this.dgcPrDescr});
+            this.dgvPrograms.DataSource = this.bsPrograms;
+            this.dgvPrograms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPrograms.Location = new System.Drawing.Point(0, 0);
+            this.dgvPrograms.Name = "dgvPrograms";
+            this.dgvPrograms.RowHeadersVisible = false;
+            this.dgvPrograms.RowTemplate.Height = 24;
+            this.dgvPrograms.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvPrograms.Size = new System.Drawing.Size(689, 343);
+            this.dgvPrograms.TabIndex = 3;
+            // 
+            // dgcPrStart
+            // 
+            this.dgcPrStart.DataPropertyName = "Start";
+            dataGridViewCellStyle1.Format = "dd.MM HH:mm";
+            this.dgcPrStart.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgcPrStart.HeaderText = "Start";
+            this.dgcPrStart.Name = "dgcPrStart";
+            this.dgcPrStart.Width = 120;
+            // 
+            // dgcPrEnd
+            // 
+            this.dgcPrEnd.DataPropertyName = "End";
+            dataGridViewCellStyle2.Format = "dd.MM HH:mm";
+            this.dgcPrEnd.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgcPrEnd.HeaderText = "End";
+            this.dgcPrEnd.Name = "dgcPrEnd";
+            this.dgcPrEnd.Width = 120;
+            // 
+            // dgcPrTitle
+            // 
+            this.dgcPrTitle.DataPropertyName = "Title";
+            this.dgcPrTitle.HeaderText = "Title";
+            this.dgcPrTitle.Name = "dgcPrTitle";
+            this.dgcPrTitle.Width = 400;
+            // 
+            // dgcPrDescr
+            // 
+            this.dgcPrDescr.DataPropertyName = "Description";
+            this.dgcPrDescr.HeaderText = "Descr";
+            this.dgcPrDescr.Name = "dgcPrDescr";
+            this.dgcPrDescr.Visible = false;
+            this.dgcPrDescr.Width = 400;
+            // 
+            // tbDescr
+            // 
+            this.tbDescr.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbDescr.Location = new System.Drawing.Point(0, 343);
+            this.tbDescr.Multiline = true;
+            this.tbDescr.Name = "tbDescr";
+            this.tbDescr.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbDescr.Size = new System.Drawing.Size(689, 134);
+            this.tbDescr.TabIndex = 4;
             // 
             // Form1
             // 
@@ -489,7 +505,7 @@
         private System.Windows.Forms.ToolStripMenuItem channelListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem getFromWebpageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miGetFromAPI;
         private System.Windows.Forms.TextBox tbURL;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -498,8 +514,8 @@
         private System.Windows.Forms.ToolStripMenuItem programmmsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearCurrentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem getAllToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem getCurrentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miGetAllFromAPI;
+        private System.Windows.Forms.ToolStripMenuItem miGetCurrentFromAPI;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem clearAllForDatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearCurrentForDatesToolStripMenuItem;
@@ -525,6 +541,8 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn dgcChUse;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcChName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgcChURL;
+        private System.Windows.Forms.ToolStripMenuItem miGetFromWebPage;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 

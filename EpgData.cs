@@ -18,6 +18,9 @@ namespace LTC
         public static string ExportXMLFileName = Utils.GetMyFolderX() + "\\epg_lv.xml";
 
         //http://tv.lattelecom.lv/programma/interaktiva/list/ltv1/
+        //https://manstv.lattelecom.tv/api/v1.4/get/tv/channels
+        //https://manstv.lattelecom.tv/api/v1.4/get/tv/epg/?daynight=2016-05-22
+
         public static string _str_ch_base_url = "https://tv.lattelecom.lv";
         public static string _str_ch_start = "tag=\"channel-program\" href=\"";
         public static string _str_ch_end = "\" tag=\"#content\"><span ";
@@ -56,6 +59,8 @@ namespace LTC
         private string _channelListURL = "";
         private int timeZone = 2;
         public int AddHours { get; set; } = 0;
+
+        public string Source = "?";
 
         public int TimeZone
         {
@@ -122,12 +127,14 @@ namespace LTC
                 Channels.Add(ch1);
             }
             SortChannels();
+            Source = "api";
             return Channels.Count > 0;
         }
 
         public bool ReadProgramms(string jspage, DateTime date)
         {
             if (string.IsNullOrEmpty(jspage)) return false;
+            if (Source == "web") return false;
             dynamic dobj = JObject.Parse(jspage);
             if (dobj.items == null) return false;
             int ct = 0;
@@ -185,6 +192,8 @@ namespace LTC
 
                 pos2 = pos3;
             }
+            SortChannels();
+            Source = "web";
             return Channels.Count > 0;
         }
 
@@ -259,6 +268,13 @@ namespace LTC
                 if (epgdata != null)
                     epgdata.SetReferences();
                 epgdata.SortChannels();
+                if (epgdata.Source == "?")
+                {
+                    if (epgdata._channelListURL != null && epgdata._channelListURL.Contains("/api/"))
+                        epgdata.Source = "api";
+                    else if (epgdata._channelListURL != null && epgdata._channelListURL.Contains("/api/"))
+                        epgdata.Source = "web";
+                }
                 return epgdata;
             }
             catch (Exception)

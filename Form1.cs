@@ -83,7 +83,7 @@ namespace LTC
             bsPrograms.DataSource = ch.Programs;
         }
 
-        public async void GetChannelListFromURL(string url)
+        public async void GetChannelListFromURL(string url, bool useapi)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -98,15 +98,24 @@ namespace LTC
                 MessageBox.Show("Download failed");
                 return;
             }
-            if (!EpgData1.ReadChannels(s))
+
+            bool rt = false;
+            if (useapi)
+                rt = EpgData1.ReadChannels(s);
+            else
+                rt = EpgData1.ReadChannelsA(s);
+
+            if (!rt)
             {
                 MessageBox.Show("Failed to read channel list");
                 return;
             }
+
             bsChannels.DataSource = EpgData1.Channels;
             MessageBox.Show("Done!");
 
         }
+
 
         public async void GetChannelListFromFile(string filename)
         {
@@ -385,6 +394,7 @@ namespace LTC
 
         public bool GetCurrentFromFile()
         {
+            if (EpgData1.Source == "api") return false;
             DateTime startdate, enddate;
             if (!GetDates(out startdate, out enddate)) return false;
             if (EpgData1.Channels.Count == 0) return true;
@@ -408,6 +418,7 @@ namespace LTC
 
         private async Task<bool> GetData(DateTime date)
         {
+            if (EpgData1.Source == "web") return false;
             string url = GetURL(date);
 
             string page = await ADownloader.GetString(url, LTC.Properties.Settings.Default.HTTPClientTimeOut);
@@ -442,6 +453,7 @@ namespace LTC
 
         private async Task<bool> GetDataA(EpgChannel ch, DateTime date)
         {
+            if (EpgData1.Source == "api") return false;
             string url = GetURL(ch, date);
 
             string page = await ADownloader.GetString(url, LTC.Properties.Settings.Default.HTTPClientTimeOut);
@@ -485,77 +497,6 @@ namespace LTC
             MessageBox.Show("Done");
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LoadData();
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void getFromWebpageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GetChannelListFromURL(tbURL.Text);
-        }
-
-        private void getCurrentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GetCurrent();
-        }
-
-        private void getAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GetAll();
-        }
-
-        private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            EpgData1.ClearAllPrograms();
-        }
-
-        private void clearCurrentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (bsChannels.Current == null) return;
-            var ch = bsChannels.Current as EpgChannel;
-            ch.ClearPrograms();
-        }
-
-        private void clearAllForDatesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DateTime startdate, enddate;
-            if (!GetDates(out startdate, out enddate)) return ;
-            if (EpgData1.Channels.Count == 0) return ;
-            EpgData1.RemoveDates(startdate, enddate);
-        }
-
-        private void clearCurrentForDatesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DateTime startdate, enddate;
-            if (!GetDates(out startdate, out enddate)) return ;
-            if (EpgData1.Channels.Count == 0) return ;
-            if (bsChannels.Current == null) return;
-            var ch = bsChannels.Current as EpgChannel;
-            ch.RemoveDates(startdate, enddate);
-        }
-
-        private void esportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            EpgData1.WriteData(MyData.ExportXMLFileName);
-            MessageBox.Show("Done!");
-        }
-
-        private void getFromFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GetChannelListFromFile(tbURL.Text);
-        }
-
-        private void getCurrentFromFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GetCurrentFromFile();
-        }
-
         private void bsPrograms_CurrentChanged(object sender, EventArgs e)
         {
             var pr = bsPrograms.Current as EpgProgram;
@@ -574,6 +515,72 @@ namespace LTC
                 tbDescr.Text = null;
                 return;
             }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void getFromAPI_Click(object sender, EventArgs e)
+        {
+            GetChannelListFromURL(tbURL.Text, true);
+        }
+        private void miGetFromWebPage_Click(object sender, EventArgs e)
+        {
+            GetChannelListFromURL(tbURL.Text, false);
+        }
+        private void getAllFromAPI_Click(object sender, EventArgs e)
+        {
+            if(EpgData1.Source == "api") GetAll();
+            else if (EpgData1.Source == "web") GetAllA();
+        }
+        private void getCurrentFromAPI_Click(object sender, EventArgs e)
+        {
+            if (EpgData1.Source == "api") GetCurrent();
+            else if (EpgData1.Source == "web") GetCurrentA();
+        }
+        private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EpgData1.ClearAllPrograms();
+        }
+        private void clearCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (bsChannels.Current == null) return;
+            var ch = bsChannels.Current as EpgChannel;
+            ch.ClearPrograms();
+        }
+        private void clearAllForDatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DateTime startdate, enddate;
+            if (!GetDates(out startdate, out enddate)) return;
+            if (EpgData1.Channels.Count == 0) return;
+            EpgData1.RemoveDates(startdate, enddate);
+        }
+        private void clearCurrentForDatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DateTime startdate, enddate;
+            if (!GetDates(out startdate, out enddate)) return;
+            if (EpgData1.Channels.Count == 0) return;
+            if (bsChannels.Current == null) return;
+            var ch = bsChannels.Current as EpgChannel;
+            ch.RemoveDates(startdate, enddate);
+        }
+        private void esportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EpgData1.WriteData(MyData.ExportXMLFileName);
+            MessageBox.Show("Done!");
+        }
+        private void getFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GetChannelListFromFile(tbURL.Text);
+        }
+        private void getCurrentFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GetCurrentFromFile();
         }
     }
 }
