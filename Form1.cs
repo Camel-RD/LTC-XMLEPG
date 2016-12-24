@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,161 +25,14 @@ namespace LTC
             tbTimeZone.DataBindings.Add("Text", EpgData1, "TimeZone");
         }
 
-        public static string ChannelListFileName = GetBasePath() + "\\epg_lv_data.xml";
-        public static string ExportXMLFileName = GetBasePath() + "\\epg_lv.xml";
-
-        //http://tv.lattelecom.lv/programma/interaktiva/list/ltv1/
 
         public EpgData EpgData1 = new EpgData();
 
-        private static string _str_ch_base_url = "https://tv.lattelecom.lv";
-        private static string _str_ch_start = "tag=\"channel-program\" href=\"";
-        private static string _str_ch_end = "\" tag=\"#content\"><span ";
-        private static string _str_ch_name_start = "<strong>";
-        private static string _str_ch_name_end = "</strong>";
-
-        private static string _str10_prog_list_start = "<ul id=\"program-list-view\">";
-        private static string _str10_prog_list_end = "</ul>";
-        private static string _str11_prog_start = "<li class=";
-        private static string _str11_prog_end = "</li>";
-        private static string _str12_start_time_start = "><b>";
-
-        private static string _str12_title2_start = "title=\"";
-        private static string _str13_title_start = "<a class=\"title\" ";
-        private static string _str13_title_end = "</a>";
-        //private static string _str14_descr_start = "<p style=";
-        private static string _str14_descr_start = "<p";
-        private static string _str14_descr_end = "</p>";
-
-        private static int _date_length = 10;
-
-        private bool WaitingForDownload = false;
-        private Action<string> OnDownloadComplete = null;
         
         private void Form1_Load(object sender, EventArgs e)
         {
             tbDateFrom.Text = Utils.DateToString(DateTime.Today);
             tbDateTo.Text = tbDateFrom.Text;
-        }
-
-        public bool ReadChannels(string html_page)
-        {
-            EpgData1.Channels.Clear();
-            int pos1 = html_page.IndexOf("<dl id=\"channel-list\">");
-            if (pos1 == -1) return false;
-            int pos2 = pos1 + 1;
-            int pos3;
-            EpgChannel ch1;
-            while (true)
-            {
-                pos2 = html_page.IndexOf(_str_ch_start, pos2);
-                if (pos2 == -1) break;
-                pos2 = pos2 + _str_ch_start.Length;
-                
-                pos3 = html_page.IndexOf(_str_ch_end, pos2);
-                if (pos3 == -1) break;
-
-                ch1 = new EpgChannel();
-                var s1 = html_page.Substring(pos2, pos3 - pos2 - _date_length);
-                ch1.URL = _str_ch_base_url + s1;
-                
-                pos2 = html_page.IndexOf(_str_ch_name_start, pos3);
-                if (pos2 == -1) break;
-                
-                pos2 += _str_ch_name_start.Length;
-                
-                pos3 = html_page.IndexOf(_str_ch_name_end, pos2);
-                if (pos3 == -1) break;
-
-                ch1.Name = html_page.Substring(pos2, pos3 - pos2);
-                EpgData1.Channels.Add(ch1);
-
-                pos2 = pos3;
-            }
-            return EpgData1.Channels.Count > 0;
-        }
-
-        public bool ReadProgramms(string html_page, EpgChannel epg_channel, DateTime date)
-        {
-            int pos1 = html_page.IndexOf(_str10_prog_list_start);
-            if (pos1 == -1) return false;
-            int pos2 = pos1 + 1;
-
-            int list_pos_end = html_page.IndexOf(_str10_prog_list_end, pos2);
-            if (list_pos_end == -1) return false;
-
-            int pos3, pos4;
-            int prog_pos_start, prog_pos_end, title_pos_end;
-            string s1;
-            TimeSpan time;
-
-            EpgProgram prog;
-
-            while (true)
-            {
-                pos2 = html_page.IndexOf(_str11_prog_start, pos2, list_pos_end - pos2);
-                if (pos2 == -1) return true;
-
-                prog_pos_end = html_page.IndexOf(_str11_prog_end, pos2, list_pos_end - pos2);
-                if (prog_pos_end == -1) return false;
-
-                pos3 = html_page.IndexOf(_str12_start_time_start, pos2, prog_pos_end - pos2);
-                if (pos3 == -1) return false;
-                pos3 += _str12_start_time_start.Length;
-
-                prog = new EpgProgram();
-                prog.Channel = epg_channel;
-
-                s1 = html_page.Substring(pos3, 5);
-                if (!GetTimeFromStr(s1, out time)) return false;
-                prog.Start = date.Add(time);
-
-                pos3 = html_page.IndexOf(_str13_title_start, pos2, prog_pos_end - pos2);
-                if (pos3 == -1) return false;
-                pos3 += _str13_title_start.Length;
-                pos4 = html_page.IndexOf(_str13_title_end, pos3, prog_pos_end - pos3);
-                if (pos4 == -1) return false;
-                title_pos_end = pos4 + _str13_title_end.Length;
-                pos3 = html_page.IndexOf(">", pos3, prog_pos_end - pos3);
-                if (pos3 == -1) return false;
-                pos3++;
-                prog.Title = Utils.UnescapeXMLText(html_page.Substring(pos3, pos4 - pos3));
-
-                pos3 = html_page.IndexOf(_str12_title2_start, pos2, prog_pos_end - pos2);
-                if (pos3 > -1)
-                {
-                    pos3 += _str12_title2_start.Length;
-                    pos4 = html_page.IndexOf("\"", pos3, prog_pos_end - pos3);
-                    if (pos4 == -1) return false;
-                    prog.Title = Utils.UnescapeXMLText(html_page.Substring(pos3, pos4 - pos3));
-                }
-
-                pos3 = html_page.IndexOf(_str14_descr_start, title_pos_end, prog_pos_end - title_pos_end);
-                if (pos3 > -1)
-                {
-                    pos3 += _str14_descr_start.Length;
-                    pos3 = html_page.IndexOf(">", pos3, prog_pos_end - pos3);
-                    if (pos3 == -1) return false;
-                    pos3++;
-                    pos4 = html_page.IndexOf(_str14_descr_end, pos3, prog_pos_end - pos3);
-                    if (pos4 == -1) return false;
-                    prog.Description = Utils.UnescapeXMLText(html_page.Substring(pos3, pos4 - pos3));
-                }
-
-                epg_channel.temp_list.Add(prog);
-                pos2 = prog_pos_end + _str11_prog_end.Length;
-            }
-        }
-
-        public bool GetTimeFromStr(string str, out TimeSpan time)
-        {
-            time = new TimeSpan(0);
-            if (str.Length != 5) return false;
-            int hr, min;
-            if (!int.TryParse(str.Substring(0, 2), out hr)) return false;
-            if (!int.TryParse(str.Substring(3, 2), out min)) return false;
-            time = new TimeSpan(hr, min, 0);
-            return true;
         }
 
         public static bool DesignModeX
@@ -190,23 +44,11 @@ namespace LTC
             }
         }
 
-        public static string GetBasePath()
-        {
-            string s = Utils.GetMyFolder();
-            /*
-            if (DesignMode)
-            {
-                DirectoryInfo dir1 = new DirectoryInfo(s);
-                s = dir1.Parent.Parent.FullName;
-            }
-             */
-            return s;
-        }
-
         public void SaveData()
         {
-            EpgData1.Save(ChannelListFileName);
+            EpgData1.Save(MyData.ChannelListFileName);
         }
+
 
         public void LoadData()
         {
@@ -217,7 +59,7 @@ namespace LTC
             tbAddHours.DataBindings.Clear();
             tbTimeZone.DataBindings.Clear();
 
-            EpgData1 = EpgData.Load(ChannelListFileName);
+            EpgData1 = EpgData.Load(MyData.ChannelListFileName);
             bsChannels.DataSource = EpgData1.Channels;
 
             tbURL.DataBindings.Add("Text", EpgData1, "ChannelListURL");
@@ -256,7 +98,7 @@ namespace LTC
                 MessageBox.Show("Download failed");
                 return;
             }
-            if (!ReadChannels(s))
+            if (!EpgData1.ReadChannels(s))
             {
                 MessageBox.Show("Failed to read channel list");
                 return;
@@ -281,7 +123,7 @@ namespace LTC
                 MessageBox.Show("File read failed");
                 return;
             }
-            if (!ReadChannels(s))
+            if (!EpgData1.ReadChannelsA(s))
             {
                 MessageBox.Show("Failed to read channel list");
                 return;
@@ -294,6 +136,11 @@ namespace LTC
         public string GetURL(EpgChannel ch, DateTime date)
         {
             return string.Format("{0}{1}", ch.URL, date.ToString("dd.MM.yyyy"));
+        }
+
+        public string GetURL(DateTime date)
+        {
+            return string.Format("https://manstv.lattelecom.tv/api/v1.4/get/tv/epg/?daynight={0}", date.ToString("yyyy-MM-dd"));
         }
 
         public bool GetDates(out DateTime startdate, out DateTime enddate)
@@ -371,6 +218,12 @@ namespace LTC
         private void CalcProgressInc()
         {
             int days = (task_date_end - task_date_start).Days + 1;
+            task_inc_progres = 100.0f / days;
+        }
+
+        private void CalcProgressIncA()
+        {
+            int days = (task_date_end - task_date_start).Days + 1;
             if (task_do_all)
             {
                 task_inc_progres = 100.0f / (float)(days * EpgData1.CountUsedChannels());
@@ -387,6 +240,55 @@ namespace LTC
         }
 
         public async Task<bool> GetCurrent()
+        {
+            return await GetAll();
+        }
+
+        public async Task<bool> GetAll()
+        {
+            DateTime startdate, enddate;
+            if (!GetDates(out startdate, out enddate)) return false;
+            if (EpgData1.Channels.Count == 0) return true;
+            if (bsChannels.Current == null) return false;
+
+            EpgData1.MakeDict();
+
+            task_date_start = startdate;
+            task_date_end = enddate;
+            task_date = startdate;
+            task_do_all = true;
+            task_cur_progres = 0.0f;
+
+            CalcProgressInc();
+            OpenTaskForm();
+            task_cancel = false;
+            task_started = true;
+
+            EpgData1.RemoveDates(startdate, enddate);
+            EpgData1.ClearTemp();
+
+            task_date = task_date_start;
+            while (task_date <= task_date_end)
+            {
+                if (task_cancel) break;
+
+                bool ret = await GetData(task_date);
+
+                await Task.Delay(200);
+
+                UpdateProgress();
+                if (!ret) break;
+                task_date = task_date.AddDays(1);
+            }
+
+            EpgData1.AddFromTemp();
+
+            Task_done();
+
+            return true;
+        }
+
+        public async Task<bool> GetCurrentA()
         {
             DateTime startdate, enddate;
             if (!GetDates(out startdate, out enddate)) return false;
@@ -413,7 +315,7 @@ namespace LTC
             {
                 if (task_cancel) break;
 
-                bool ret = await GetData(task_cur_ch, task_date);
+                bool ret = await GetDataA(task_cur_ch, task_date);
 
                 await Task.Delay(200);
 
@@ -430,7 +332,10 @@ namespace LTC
             return true;
         }
 
-        public async Task<bool> GetAll()
+
+
+
+        public async Task<bool> GetAllA()
         {
             DateTime startdate, enddate;
             if (!GetDates(out startdate, out enddate)) return false;
@@ -442,7 +347,7 @@ namespace LTC
             task_do_all = true;
             task_cur_progres = 0.0f;
 
-            CalcProgressInc();
+            CalcProgressIncA();
             OpenTaskForm();
             task_cancel = false;
             task_started = true;
@@ -459,7 +364,7 @@ namespace LTC
                 {
                     if (task_cancel) break;
 
-                    bool ret = await GetData(task_cur_ch, task_date);
+                    bool ret = await GetDataA(task_cur_ch, task_date);
 
                     await Task.Delay(200);
 
@@ -493,7 +398,7 @@ namespace LTC
             EpgData1.ClearTemp();
 
             string page = File.ReadAllText(tbURL.Text);
-            bool ret = ReadProgramms(page, task_cur_ch, task_date);
+            bool ret = task_cur_ch.ReadProgrammsA(page, task_date);
 
             task_cur_ch.AddFromTemp();
             task_cur_ch.CheckEndTimes();
@@ -501,7 +406,41 @@ namespace LTC
             return true;
         }
 
-        private async Task<bool> GetData(EpgChannel ch, DateTime date)
+        private async Task<bool> GetData(DateTime date)
+        {
+            string url = GetURL(date);
+
+            string page = await ADownloader.GetString(url, LTC.Properties.Settings.Default.HTTPClientTimeOut);
+
+            if (page == null)
+            {
+                TaskFormMsg(
+                    string.Format("Failed to download programs for {0}",
+                        task_date.ToString("yyyy.MM.dd"))
+                    );
+                return false;
+            }
+
+            //File.WriteAllText(GetBasePath()+"\\e1.html", page);
+
+            bool ret1 = await Task<bool>.Run(() =>
+            {
+                return EpgData1.ReadProgramms(page, task_date);
+            });
+
+            if (!ret1)
+            {
+                TaskFormMsg(
+                    string.Format("Failed to read programs for {0}",
+                        task_date.ToString("yyyy.MM.dd"))
+                    );
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task<bool> GetDataA(EpgChannel ch, DateTime date)
         {
             string url = GetURL(ch, date);
 
@@ -520,7 +459,7 @@ namespace LTC
 
             bool ret1 = await Task<bool>.Run(() =>
             {
-                return ReadProgramms(page, task_cur_ch, task_date);
+                return task_cur_ch.ReadProgrammsA(page, task_date);
             });
 
             if (!ret1)
@@ -603,7 +542,7 @@ namespace LTC
 
         private void esportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EpgData1.WriteData(ExportXMLFileName);
+            EpgData1.WriteData(MyData.ExportXMLFileName);
             MessageBox.Show("Done!");
         }
 
@@ -615,6 +554,26 @@ namespace LTC
         private void getCurrentFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GetCurrentFromFile();
+        }
+
+        private void bsPrograms_CurrentChanged(object sender, EventArgs e)
+        {
+            var pr = bsPrograms.Current as EpgProgram;
+            if(pr == null)
+            {
+                tbDescr.Text = null;
+                return;
+            }
+            tbDescr.Text = pr.Description;
+        }
+
+        private void bsPrograms_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if(e.ListChangedType == ListChangedType.Reset)
+            {
+                tbDescr.Text = null;
+                return;
+            }
         }
     }
 }

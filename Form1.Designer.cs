@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bsChannels = new System.Windows.Forms.BindingSource(this.components);
             this.bsPrograms = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -64,14 +64,15 @@
             this.tbTimeZone = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gdvChannels = new System.Windows.Forms.DataGridView();
-            this.dgcChUse = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dgcChName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcChURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvPrograms = new System.Windows.Forms.DataGridView();
+            this.tbDescr = new System.Windows.Forms.TextBox();
             this.dgcPrStart = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgcPrEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgcPrTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgcPrDescr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgcChUse = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dgcChName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgcChURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.bsChannels)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsPrograms)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -87,6 +88,11 @@
             // 
             this.bsChannels.CurrentChanged += new System.EventHandler(this.bsChannels_CurrentChanged);
             // 
+            // bsPrograms
+            // 
+            this.bsPrograms.CurrentChanged += new System.EventHandler(this.bsPrograms_CurrentChanged);
+            this.bsPrograms.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.bsPrograms_ListChanged);
+            // 
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(21, 21);
@@ -95,7 +101,7 @@
             this.programmmsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1121, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1000, 33);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -315,9 +321,9 @@
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 100);
             this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
@@ -326,8 +332,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvPrograms);
-            this.splitContainer1.Size = new System.Drawing.Size(1116, 409);
-            this.splitContainer1.SplitterDistance = 150;
+            this.splitContainer1.Panel2.Controls.Add(this.tbDescr);
+            this.splitContainer1.Size = new System.Drawing.Size(995, 477);
+            this.splitContainer1.SplitterDistance = 300;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 8;
             // 
@@ -344,32 +351,11 @@
             this.gdvChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gdvChannels.Location = new System.Drawing.Point(0, 0);
             this.gdvChannels.Name = "gdvChannels";
+            this.gdvChannels.RowHeadersVisible = false;
             this.gdvChannels.RowTemplate.Height = 24;
-            this.gdvChannels.Size = new System.Drawing.Size(1116, 150);
+            this.gdvChannels.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.gdvChannels.Size = new System.Drawing.Size(300, 477);
             this.gdvChannels.TabIndex = 2;
-            // 
-            // dgcChUse
-            // 
-            this.dgcChUse.DataPropertyName = "Use";
-            this.dgcChUse.FalseValue = "false";
-            this.dgcChUse.HeaderText = "Use";
-            this.dgcChUse.Name = "dgcChUse";
-            this.dgcChUse.TrueValue = "true";
-            this.dgcChUse.Width = 50;
-            // 
-            // dgcChName
-            // 
-            this.dgcChName.DataPropertyName = "Name";
-            this.dgcChName.HeaderText = "Name";
-            this.dgcChName.Name = "dgcChName";
-            this.dgcChName.Width = 150;
-            // 
-            // dgcChURL
-            // 
-            this.dgcChURL.DataPropertyName = "URL";
-            this.dgcChURL.HeaderText = "URL";
-            this.dgcChURL.Name = "dgcChURL";
-            this.dgcChURL.Width = 470;
             // 
             // dgvPrograms
             // 
@@ -385,15 +371,27 @@
             this.dgvPrograms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPrograms.Location = new System.Drawing.Point(0, 0);
             this.dgvPrograms.Name = "dgvPrograms";
+            this.dgvPrograms.RowHeadersVisible = false;
             this.dgvPrograms.RowTemplate.Height = 24;
-            this.dgvPrograms.Size = new System.Drawing.Size(1116, 253);
+            this.dgvPrograms.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvPrograms.Size = new System.Drawing.Size(689, 343);
             this.dgvPrograms.TabIndex = 3;
+            // 
+            // tbDescr
+            // 
+            this.tbDescr.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbDescr.Location = new System.Drawing.Point(0, 343);
+            this.tbDescr.Multiline = true;
+            this.tbDescr.Name = "tbDescr";
+            this.tbDescr.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbDescr.Size = new System.Drawing.Size(689, 134);
+            this.tbDescr.TabIndex = 4;
             // 
             // dgcPrStart
             // 
             this.dgcPrStart.DataPropertyName = "Start";
-            dataGridViewCellStyle1.Format = "dd.MM HH:mm";
-            this.dgcPrStart.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Format = "dd.MM HH:mm";
+            this.dgcPrStart.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgcPrStart.HeaderText = "Start";
             this.dgcPrStart.Name = "dgcPrStart";
             this.dgcPrStart.Width = 120;
@@ -401,8 +399,8 @@
             // dgcPrEnd
             // 
             this.dgcPrEnd.DataPropertyName = "End";
-            dataGridViewCellStyle2.Format = "dd.MM HH:mm";
-            this.dgcPrEnd.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Format = "dd.MM HH:mm";
+            this.dgcPrEnd.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgcPrEnd.HeaderText = "End";
             this.dgcPrEnd.Name = "dgcPrEnd";
             this.dgcPrEnd.Width = 120;
@@ -419,13 +417,38 @@
             this.dgcPrDescr.DataPropertyName = "Description";
             this.dgcPrDescr.HeaderText = "Descr";
             this.dgcPrDescr.Name = "dgcPrDescr";
+            this.dgcPrDescr.Visible = false;
             this.dgcPrDescr.Width = 400;
+            // 
+            // dgcChUse
+            // 
+            this.dgcChUse.DataPropertyName = "Use";
+            this.dgcChUse.FalseValue = "false";
+            this.dgcChUse.HeaderText = "Use";
+            this.dgcChUse.Name = "dgcChUse";
+            this.dgcChUse.TrueValue = "true";
+            this.dgcChUse.Width = 40;
+            // 
+            // dgcChName
+            // 
+            this.dgcChName.DataPropertyName = "Name";
+            this.dgcChName.HeaderText = "Name";
+            this.dgcChName.Name = "dgcChName";
+            this.dgcChName.Width = 230;
+            // 
+            // dgcChURL
+            // 
+            this.dgcChURL.DataPropertyName = "URL";
+            this.dgcChURL.HeaderText = "URL";
+            this.dgcChURL.Name = "dgcChURL";
+            this.dgcChURL.Visible = false;
+            this.dgcChURL.Width = 470;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1121, 511);
+            this.ClientSize = new System.Drawing.Size(1000, 579);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.tbTimeZone);
             this.Controls.Add(this.tbAddHours);
@@ -441,7 +464,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "LTC EPG";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bsChannels)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsPrograms)).EndInit();
@@ -449,6 +472,7 @@
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gdvChannels)).EndInit();
@@ -491,15 +515,16 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem getCurrentFromFileToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcPrDescr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcPrTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcPrEnd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcPrStart;
         private System.Windows.Forms.DataGridView dgvPrograms;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcChURL;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcChName;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn dgcChUse;
         private System.Windows.Forms.DataGridView gdvChannels;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgcPrStart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgcPrEnd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgcPrTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgcPrDescr;
+        private System.Windows.Forms.TextBox tbDescr;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dgcChUse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgcChName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgcChURL;
     }
 }
 

@@ -8,22 +8,58 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
+using Newtonsoft.Json.Linq;
 
 namespace LTC
 {
+    public static class MyData
+    {
+        public static string ChannelListFileName = Utils.GetMyFolderX() + "\\epg_lv_data.xml";
+        public static string ExportXMLFileName = Utils.GetMyFolderX() + "\\epg_lv.xml";
+
+        //http://tv.lattelecom.lv/programma/interaktiva/list/ltv1/
+        public static string _str_ch_base_url = "https://tv.lattelecom.lv";
+        public static string _str_ch_start = "tag=\"channel-program\" href=\"";
+        public static string _str_ch_end = "\" tag=\"#content\"><span ";
+        public static string _str_ch_name_start = "<strong>";
+        public static string _str_ch_name_end = "</strong>";
+
+        public static string _str10_prog_list_start = "<ul id=\"program-list-view\">";
+        public static string _str10_prog_list_end = "</ul>";
+        public static string _str11_prog_start = "<li class=";
+        public static string _str11_prog_end = "</li>";
+        public static string _str12_start_time_start = "><b>";
+
+        public static string _str12_title2_start = "title=\"";
+        public static string _str13_title_start = "<a class=\"title\" ";
+        public static string _str13_title_end = "</a>";
+        //public static string _str14_descr_start = "<p style=";
+        public static string _str14_descr_start = "<p";
+        public static string _str14_descr_end = "</p>";
+
+        public static int _date_length = 10;
+
+        public static bool GetTimeFromStr(string str, out TimeSpan time)
+        {
+            time = new TimeSpan(0);
+            if (str.Length != 5) return false;
+            int hr, min;
+            if (!int.TryParse(str.Substring(0, 2), out hr)) return false;
+            if (!int.TryParse(str.Substring(3, 2), out min)) return false;
+            time = new TimeSpan(hr, min, 0);
+            return true;
+        }
+    }
+
     public class EpgData
     {
         private string _channelListURL = "";
         private int timeZone = 2;
-        public int AddHours { get; set; }
+        public int AddHours { get; set; } = 0;
 
         public int TimeZone
         {
-            get
-            {
-                return timeZone;
-                
-            }
+            get { return timeZone; }
             set
             {
                 timeZone = value;
@@ -31,14 +67,7 @@ namespace LTC
             }
         }
 
-
         public BindingList<EpgChannel> Channels = new BindingList<EpgChannel>();
-
-        public EpgData()
-        {
-            AddHours = 0;
-            TimeZone = 2;
-        }
 
         public string ChannelListURL
         {
@@ -60,6 +89,105 @@ namespace LTC
             return k;
         }
 
+        [XmlIgnore]
+        public Dictionary<long, EpgProgram> Dict_EpgProgram = new Dictionary<long, EpgProgram>();
+
+        public void MakeDict()
+        {
+            Dict_EpgProgram.Clear();
+            if (Channels.Count == 0) return;
+            foreach (var ch in Channels)
+            {
+                foreach (var pr in ch.Programs)
+                {
+                    Dict_EpgProgram[pr.Id] = pr;
+                }
+            }
+        }
+
+
+        public bool ReadChannels(string jspage)
+        {
+            Channels.Clear();
+            if (string.IsNullOrEmpty(jspage)) return false;
+            dynamic dobj = JObject.Parse(jspage);
+            foreach (var item in dobj.items)
+            {
+                var ch1 = new EpgChannel()
+                {
+                    Id = item.id,
+                    xprs_id = item.xprs_id,
+                    Name = item.name
+                };
+                Channels.Add(ch1);
+            }
+            SortChannels();
+            return Channels.Count > 0;
+        }
+
+        public bool ReadProgramms(string jspage, DateTime date)
+        {
+            if (string.IsNullOrEmpty(jspage)) return false;
+            dynamic dobj = JObject.Parse(jspage);
+            if (dobj.items == null) return false;
+            int ct = 0;
+            foreach (var item in dobj.items)
+            {
+                string chid = item.channel_id;
+                var epg_channel = Channels.Where(d => d.xprs_id == chid).FirstOrDefault();
+                if (epg_channel == null || !epg_channel.Use) continue;
+                var prog = new EpgProgram();
+                prog.Id = long.Parse((string)item.id);
+                prog.Title = item.title;
+                prog.Description = item.description;
+                prog.Start = item.time_start;
+                prog.End = item.time_stop;
+                if (Dict_EpgProgram.ContainsKey(prog.Id)) continue;
+                prog.Channel = epg_channel;
+                epg_channel.temp_list.Add(prog);
+                ct++;
+            }
+            return ct > 0;
+
+        }
+
+        public bool ReadChannelsA(string html_page)
+        {
+            Channels.Clear();
+            int pos1 = html_page.IndexOf("<dl id=\"channel-list\">");
+            if (pos1 == -1) return false;
+            int pos2 = pos1 + 1;
+            int pos3;
+            EpgChannel ch1;
+            while (true)
+            {
+                pos2 = html_page.IndexOf(MyData._str_ch_start, pos2);
+                if (pos2 == -1) break;
+                pos2 = pos2 + MyData._str_ch_start.Length;
+
+                pos3 = html_page.IndexOf(MyData._str_ch_end, pos2);
+                if (pos3 == -1) break;
+
+                ch1 = new EpgChannel();
+                var s1 = html_page.Substring(pos2, pos3 - pos2 - MyData._date_length);
+                ch1.URL = MyData._str_ch_base_url + s1;
+
+                pos2 = html_page.IndexOf(MyData._str_ch_name_start, pos3);
+                if (pos2 == -1) break;
+
+                pos2 += MyData._str_ch_name_start.Length;
+
+                pos3 = html_page.IndexOf(MyData._str_ch_name_end, pos2);
+                if (pos3 == -1) break;
+
+                ch1.Name = html_page.Substring(pos2, pos3 - pos2);
+                Channels.Add(ch1);
+
+                pos2 = pos3;
+            }
+            return Channels.Count > 0;
+        }
+
         public void RemoveDates(DateTime date1, DateTime date2)
         {
             foreach (var ch in Channels)
@@ -67,11 +195,13 @@ namespace LTC
                 ch.RemoveDates(date1, date2);
             }
         }
+
         public void AddFromTemp()
         {
             foreach (var c in Channels)
                 c.AddFromTemp();
         }
+
         public void CheckEndTimes()
         {
             foreach (var c in Channels)
@@ -103,6 +233,17 @@ namespace LTC
             }
         }
 
+        public void SortChannels()
+        {
+            var lord = Channels
+                .OrderBy(d => d.Use ? 0 : 1)
+                .ThenBy(d => d.Name)
+                .ToList();
+            Channels.Clear();
+            lord.ForEach(d => Channels.Add(d));
+        }
+
+
         public static EpgData Load(string filename)
         {
             EpgData epgdata = new EpgData();
@@ -117,6 +258,7 @@ namespace LTC
                 epgdata = (EpgData)xs.Deserialize(fs);
                 if (epgdata != null)
                     epgdata.SetReferences();
+                epgdata.SortChannels();
                 return epgdata;
             }
             catch (Exception)
@@ -186,21 +328,89 @@ namespace LTC
 
     public class EpgChannel
     {
-        public string Name { get; set; }
-        public string URL { get; set; }
-        public bool Use { get; set; }
+        public string Id { get; set; } = null;
+        public string xprs_id { get; set; } = null;
+
+        public string Name { get; set; } = "";
+        public string URL { get; set; } = "";
+        public bool Use { get; set; } = false;
 
         public BindingList<EpgProgram> Programs = new BindingList<EpgProgram>();
 
         [XmlIgnore]
         public List<EpgProgram> temp_list = new List<EpgProgram>();
 
-        public EpgChannel()
+
+        public bool ReadProgrammsA(string html_page, DateTime date)
         {
-            Name = "";
-            URL = "";
-            Use = false;
+            int pos1 = html_page.IndexOf(MyData._str10_prog_list_start);
+            if (pos1 == -1) return false;
+            int pos2 = pos1 + 1;
+
+            int list_pos_end = html_page.IndexOf(MyData._str10_prog_list_end, pos2);
+            if (list_pos_end == -1) return false;
+
+            int pos3, pos4;
+            int prog_pos_start, prog_pos_end, title_pos_end;
+            string s1;
+            TimeSpan time;
+
+            EpgProgram prog;
+
+            while (true)
+            {
+                pos2 = html_page.IndexOf(MyData._str11_prog_start, pos2, list_pos_end - pos2);
+                if (pos2 == -1) return true;
+
+                prog_pos_end = html_page.IndexOf(MyData._str11_prog_end, pos2, list_pos_end - pos2);
+                if (prog_pos_end == -1) return false;
+
+                pos3 = html_page.IndexOf(MyData._str12_start_time_start, pos2, prog_pos_end - pos2);
+                if (pos3 == -1) return false;
+                pos3 += MyData._str12_start_time_start.Length;
+
+                prog = new EpgProgram();
+                prog.Channel = this;
+
+                s1 = html_page.Substring(pos3, 5);
+                if (!MyData.GetTimeFromStr(s1, out time)) return false;
+                prog.Start = date.Add(time);
+
+                pos3 = html_page.IndexOf(MyData._str13_title_start, pos2, prog_pos_end - pos2);
+                if (pos3 == -1) return false;
+                pos3 += MyData._str13_title_start.Length;
+                pos4 = html_page.IndexOf(MyData._str13_title_end, pos3, prog_pos_end - pos3);
+                if (pos4 == -1) return false;
+                title_pos_end = pos4 + MyData._str13_title_end.Length;
+                pos3 = html_page.IndexOf(">", pos3, prog_pos_end - pos3);
+                if (pos3 == -1) return false;
+                pos3++;
+
+                pos3 = html_page.IndexOf(MyData._str12_title2_start, pos2, prog_pos_end - pos2);
+                if (pos3 > -1)
+                {
+                    pos3 += MyData._str12_title2_start.Length;
+                    pos4 = html_page.IndexOf("\"", pos3, prog_pos_end - pos3);
+                    if (pos4 == -1) return false;
+                }
+
+                pos3 = html_page.IndexOf(MyData._str14_descr_start, title_pos_end, prog_pos_end - title_pos_end);
+                if (pos3 > -1)
+                {
+                    pos3 += MyData._str14_descr_start.Length;
+                    pos3 = html_page.IndexOf(">", pos3, prog_pos_end - pos3);
+                    if (pos3 == -1) return false;
+                    pos3++;
+                    pos4 = html_page.IndexOf(MyData._str14_descr_end, pos3, prog_pos_end - pos3);
+                    if (pos4 == -1) return false;
+                }
+
+                temp_list.Add(prog);
+                pos2 = prog_pos_end + MyData._str11_prog_end.Length;
+            }
         }
+
+
 
         public void AddFromTemp()
         {
@@ -277,6 +487,7 @@ namespace LTC
 
     public class EpgProgram
     {
+        public long Id { get; set; } = -1;
         internal static int TimePlusHours = 2;
         public string Title { get; set; }
         public string Description { get; set; }

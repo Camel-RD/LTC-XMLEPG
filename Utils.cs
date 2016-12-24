@@ -1,45 +1,66 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
+using System.Text;
+using System.Windows.Forms;
 using System.Xml.Serialization;
-
 
 namespace LTC
 {
     public static class Utils
     {
+
+        public class TEventArgs<T> : EventArgs
+        {
+            public T Arg { get; set; }
+            public TEventArgs(T arg)
+            {
+                Arg = arg;
+            }
+        }
+        
         public static string GetMyFolder()
         {
             return GetFolder(Application.ExecutablePath);
+            //return GetFolder(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        }
+
+        public static string GetMyFolderX()
+        {
+            string s1 = GetMyFolder().ToLower();
+            string s2 = s1.ToLower();
+            string[] ss = new[] { "\\bin\\debug", "\\bin\\release" };
+            foreach (string s in ss)
+            {
+                if (s2.EndsWith(s))
+                {
+                    return s1.Substring(0, s1.Length - s.Length);
+                }
+            }
+            return s1;
         }
 
         //returns path without "\"
         public static string GetFolder(string filename)
         {
-            int i, k = filename.Length - 1;
-            char c;
-            for (i = k; i >= 0; i--)
-            {
-                c = filename[i];
-                if (c == '\\' || c == '/') return filename.Substring(0, i);
-            }
-            return "";
+            if (string.IsNullOrEmpty(filename)) return null;
+            int k = filename.LastIndexOfAny("\\/".ToArray());
+            if (k > -1) return filename.Substring(0, k);
+            return filename;
         }
 
         public static string GetFileNameFromURL(string url)
         {
-            int i, k = url.Length - 1;
-            for (i = k; i >= 0; i--)
-                if (url[i] == '\\' || url[i] == '/')
-                    return url.Substring(i + 1);
+            if (string.IsNullOrEmpty(url)) return null;
+            int k = url.LastIndexOfAny("\\/".ToArray());
+            if (k > -1) return url.Substring(k + 1);
             return url;
         }
 
@@ -109,6 +130,7 @@ namespace LTC
         {
             return DateTime.TryParseExact(value, "d.M.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out date);
         }
+
         public static DateTime? StringToDate(string value)
         {
             DateTime dt;
@@ -137,6 +159,46 @@ namespace LTC
             "jūlijs", "augusts", "septembris", "oktobris", "novembris", "decembris"
         };
 
+        public static string[] MonthNamesAcc = new string[]
+        {
+            "janvāri", "februāri", "martu", "aprīli", "maiju", "jūniju",
+            "jūliju", "augustu", "septembri", "oktobri", "novembri", "decembri"
+        };
+
+        public static int DaysInMonth(this DateTime dt)
+        {
+            var dt1 = new DateTime(dt.Year, dt.Month, 1);
+            return (dt1.AddMonths(1) - dt1).Days;
+        }
+        public static DateTime FirstDayOfMonth(this DateTime dt)
+        {
+            return new DateTime(dt.Year, dt.Month, 1);
+        }
+        public static DateTime LastDayOfMonth(this DateTime dt)
+        {
+            return new DateTime(dt.Year, dt.Month, 1).AddMonths(1).AddDays(-1);
+        }
+        public static bool IsBetween(this DateTime dt, DateTime dt1, DateTime dt2)
+        {
+            return dt >= dt1 && dt <= dt2;
+        }
+
+        public static void AddMonths(ref int yr, ref int mt, int addmt)
+        {
+            yr += (addmt - 1) / 12;
+            mt += (addmt - 1) % 12 + 1;
+            if (mt < 1)
+            {
+                yr--;
+                mt = 12 - mt;
+            }
+            if (mt > 12)
+            {
+                yr++;
+                mt = mt - 12;
+            }
+        }
+
         public static bool StringEndsWith(string s, string end)
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(end)) return false;
@@ -156,7 +218,7 @@ namespace LTC
         public static string LeftMax(this string s, int count)
         {
             if (s == null) return null;
-            if (s.Length < count) count = s.Length;
+            if (s.Length < count) return s;
             return s.Substring(0, count);
         }
 
@@ -183,6 +245,111 @@ namespace LTC
             }
             return -1;
         }
+        public static int IndexOf(this object[] arr, object value)
+        {
+            if (arr == null || arr.Length == 0) return -1;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (object.ReferenceEquals(arr[i], value)) return i;
+            }
+            return -1;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (action == null) throw new ArgumentNullException("action");
+            foreach (T item in source)
+                action(item);
+        }
+
+        public static IEnumerable<TSource> DistinctByForOrdered<TSource, TKey>(this IEnumerable<TSource> source,
+                  Func<TSource, TSource, bool> fequals)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (fequals == null) throw new ArgumentNullException("fequals");
+            bool firsrfound = false;
+            TSource prevobj = default(TSource);
+            foreach (var element in source)
+            {
+                if (!firsrfound)
+                {
+                    firsrfound = true;
+                    prevobj = element;
+                    yield return element;
+                    continue;
+                }
+                if (fequals(element, prevobj)) continue;
+                yield return element;
+            }
+        }
+
+        public static IEnumerable<TSource> DistinctByForOrdered<TSource, TKey>(this IEnumerable<TSource> source,
+                  Func<TSource, TKey> keySelector)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (keySelector == null) throw new ArgumentNullException("keySelector");
+            bool firsrfound = false;
+            TSource prevobj = default(TSource);
+            foreach (var element in source)
+            {
+                if (!firsrfound)
+                {
+                    firsrfound = true;
+                    prevobj = element;
+                    yield return element;
+                    continue;
+                }
+                if (object.Equals(keySelector(element), keySelector(prevobj))) continue;
+                yield return element;
+            }
+        }
+
+        public static IEnumerable<TSource> DistinctForOrdered<TSource>(this IEnumerable<TSource> source)
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            bool firsrfound = false;
+            TSource prevobj = default(TSource);
+            foreach (var element in source)
+            {
+                if (!firsrfound)
+                {
+                    firsrfound = true;
+                    prevobj = element;
+                    yield return element;
+                    continue;
+                }
+                if (object.Equals(element, prevobj)) continue;
+                yield return element;
+            }
+        }
+
+        public static TSource WithMaxOrDefault<TSource>(this IEnumerable<TSource> source,
+            Func<TSource, IComparable> fgetcomparable, TSource defaultvalue = default(TSource))
+        {
+            if (source == null) throw new ArgumentNullException("source");
+            if (fgetcomparable == null) throw new ArgumentNullException("fgetcomparable");
+
+            bool firsrfound = false;
+            TSource maxobj = defaultvalue;
+            foreach (var element in source)
+            {
+                if (element == null) continue;
+                if (!firsrfound)
+                {
+                    firsrfound = true;
+                    maxobj = element;
+                    continue;
+                }
+                var comp1 = fgetcomparable(element);
+                var comp2 = fgetcomparable(maxobj);
+                if (comp1.CompareTo(comp2) > 0)
+                    maxobj = element;
+            }
+            if (firsrfound) return maxobj;
+            return defaultvalue;
+        }
+
 
         //for example: can remove Click events from ToolStripMenuItem (eventname: EventClick)
         public static void ClearEventInvocations(object obj, string eventName)
@@ -233,6 +400,52 @@ namespace LTC
             {
                 return null;
             }
+        }
+
+        public static bool GetPublicPropertyValue(object obj, string propname, out object value)
+        {
+            value = null;
+            if (obj == null || string.IsNullOrEmpty(propname)) return false;
+
+            var prop = TypeDescriptor.GetProperties(obj).Find(propname, false);
+            //var prop = obj.GetType().GetProperty(propname);
+
+            if (prop == null)
+            {
+                var prop2 = obj.GetType().GetProperty(propname);
+                if (prop != null)
+                {
+                    Debug.Print("GetProperty shit");
+                    throw new Exception("GetProperty shit");
+                }
+
+                return false;
+            }
+
+            try
+            {
+                value = prop.GetValue(obj);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public static int FindValue(IList list, string propname, object value)
+        {
+            if (list == null || list.Count == 0 || string.IsNullOrEmpty(propname)) return -1;
+            object o1;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var o2 = list[i];
+                if (o2 == null) continue;
+                if (!GetPublicPropertyValue(list[i], propname, out o1)) continue;
+                if (object.Equals(o1, value))
+                    return i;
+            }
+            return -1;
         }
 
         public static object CallMethod(object obj, string methodName)
@@ -324,6 +537,8 @@ namespace LTC
             }
         }
 
+
+
         public static void SetDGVShowCellToolTipsA(Control c, bool b)
         {
             if (c == null) return;
@@ -351,6 +566,11 @@ namespace LTC
             return (string) o;
         }
 
+        public static int AsInt(this object o)
+        {
+            if (o == null || o == DBNull.Value) return 0;
+            return (int)o;
+        }
         public static decimal AsDecimal(this object o)
         {
             if (o == null || o == DBNull.Value) return 0.00M;
@@ -361,12 +581,57 @@ namespace LTC
             if (o == null || o == DBNull.Value) return 0.00f;
             return (float)o;
         }
-        public static string UnescapeXMLText(string s)
+        public static int DayOfWeekA(this DateTime dt)
         {
-            if (string.IsNullOrEmpty(s)) return s;
-            return new XText(s).ToString();
+            int wd = (int)dt.DayOfWeek;
+            if (wd == 0) wd = 7;
+            return wd;
         }
 
+        public static Type GetFirstTypeX(Type type)
+        {
+            var asm = System.Reflection.Assembly.GetExecutingAssembly();
+            return asm.GetTypes().Where(t => t.IsSubclassOf(type)).FirstOrDefault();
+        }
+
+        public static bool DGVParseDateCell(DataGridViewCellParsingEventArgs e)
+        {
+            if (e.Value == null || e.Value == DBNull.Value) return false;
+            if (!(e.Value is string)) return false;
+            string s = (string) e.Value;
+            if (string.IsNullOrEmpty(s)) return false;
+            DateTime dt;
+            if (!Utils.StringToDate(s, out dt)) return false;
+            e.Value = dt;
+            e.ParsingApplied = true;
+            return true;
+        }
+
+        public static Dictionary<int, List<T>> BreakListInGroups<T>(
+            IEnumerable<T> list, Func<T, int> getkey)
+        {
+            var dic = new Dictionary<int, List<T>>();
+            List<T> list_k;
+            foreach (var d in list)
+            {
+                int key = getkey(d);
+                if (!dic.TryGetValue(key, out list_k))
+                {
+                    list_k = new List<T>();
+                    dic[key] = list_k;
+                }
+                list_k.Add(d);
+            }
+            return dic;
+        }
+
+        public static object GetDefaultValue(this Type t)
+        {
+            if (t.IsValueType && Nullable.GetUnderlyingType(t) == null)
+                return Activator.CreateInstance(t);
+            else
+                return null;
+        }
 
     }
 }

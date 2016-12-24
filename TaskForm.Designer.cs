@@ -35,7 +35,7 @@
             // 
             // btCancel
             // 
-            this.btCancel.Location = new System.Drawing.Point(436, 12);
+            this.btCancel.Location = new System.Drawing.Point(430, 5);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(121, 42);
             this.btCancel.TabIndex = 0;
@@ -45,7 +45,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 12);
+            this.progressBar1.Location = new System.Drawing.Point(3, 7);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(418, 38);
             this.progressBar1.Step = 2;
@@ -53,11 +53,12 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(2, 67);
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.textBox1.Location = new System.Drawing.Point(0, 53);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(563, 186);
+            this.textBox1.Size = new System.Drawing.Size(555, 205);
             this.textBox1.TabIndex = 2;
             this.textBox1.WordWrap = false;
             // 
@@ -65,7 +66,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(569, 258);
+            this.ClientSize = new System.Drawing.Size(555, 258);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btCancel);
@@ -77,7 +78,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "TaskForm";
+            this.Text = "TaskInfo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TaskForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
